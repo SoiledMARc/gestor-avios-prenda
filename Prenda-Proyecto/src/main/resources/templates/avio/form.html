@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://kit.fontawesome.com/64d58efce2.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/styleAdm.css" />
+</head>
+
+
+<body id="body-pd">
+	<header class="header" id="header">
+		<div class="header__toggle">
+			<i class="fas fa-align-justify" style="color: aliceblue;"
+				id="header-toggle"></i>
+		</div>
+
+		<div class="header__img">
+			<img
+				src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABeV0Af4XqVIi8qSUEeV_llbkH9B-TyiTGukOX7pSFxAuAyoc9q-e--ErSFvK4dLjE7tYDAr1L0PXAja28cDsLWwGdA_A.jpg?r=43c"
+				alt="">
+		</div>
+	</header>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Avios</h1>
+	</div>
+
+	<label for=""></label>
+
+	<div class="container">
+
+		<!-- FORM -->
+
+		<div th:object="${avio}" th:remove="tag">
+			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+				role="alert">
+				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+			</ul>
+		</div>
+
+		<form th:action="@{/avio/form}" th:object="${avio}" method="post"
+			enctype="multipart/form-data">
+			<!-- PASO DE DATOS -->
+			<div class="input-group mb-3 row g-3 align-items-center">
+				<div class="col-auto">
+					<input type="text" class="form-control" placeholder="Nombre"
+						th:field="*{nombre}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+				</div>
+				<!-- PASO DE DATOS -->
+
+				<div class="col-auto">
+					<input type="text" class="form-control" placeholder="Color"
+						th:field="*{color}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></small>
+				</div>
+				<!-- PASO DE DATOS -->
+				<div class="col-auto">
+					<input type="number" step="any" maxlength="10" class="form-control" placeholder="Costo por pieza"
+						th:field="*{costo}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('costo')}" th:errors="*{costo}"></small>
+				</div>
+
+			</div>
+
+			<div class="input-group mb-3 row g-3 align-items-center">
+				<div class="col-auto">
+					<input type="number"  maxlength="10" step="any" class="form-control" placeholder="Cantidad"
+						th:field="*{cantidad}" th:errorclass="'form-control alert-danger'" />
+					<small class="form-text text-danger"
+						th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></small>
+				</div>
+
+				<div class="col-auto">
+					<select id="disabledSelect" class="form-select form-control"
+						th:field="*{tipo}">
+						<option th:value="'Cierre'">Cierre</option>
+						<option th:value="'Boton'">Boton</option>
+						<option th:value="'Remache'">Remache</option>
+						<option th:value="'Adorno'">Adorno</option>
+					</select> <small class="form-text text-danger"
+						th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></small>
+				</div>
+			</div>
+			
+			<input type="hidden" th:value="0" th:field="*{enable}">
+
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<input type="submit"  class="btn btn-secondary" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!--===== MAIN JS =====-->
+
+	<script src="/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js "
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj "
+		crossorigin="anonymous "></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js "
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN "
+		crossorigin="anonymous "></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js "
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV "
+		crossorigin="anonymous "></script>
+
+</body>
+</html>

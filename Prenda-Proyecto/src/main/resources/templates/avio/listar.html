@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://kit.fontawesome.com/64d58efce2.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/styleAdm.css" />
+</head>
+
+<body id="body-pd">
+	<header class="header" id="header">
+		<div class="header__toggle">
+			<i class="fas fa-align-justify" style="color: aliceblue;"
+				id="header-toggle"></i>
+		</div>
+
+		<div class="header__img">
+			<img
+				src="https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABeV0Af4XqVIi8qSUEeV_llbkH9B-TyiTGukOX7pSFxAuAyoc9q-e--ErSFvK4dLjE7tYDAr1L0PXAja28cDsLWwGdA_A.jpg?r=43c"
+				alt="">
+		</div>
+	</header>
+
+	<nav th:replace="layout/layout-admin :: navbar"></nav>
+
+	<div class="container" style="text-align: center;">
+		<h1 style="color: rgb(17, 18, 19); font-weight: 700;">Avios</h1>
+	</div>
+	<label for=""></label>
+	<div class="container">
+		<div class="input-group mb-3"></div>
+	</div>
+	<div class="container">
+		<form th:action="@{/avio/listar}" method="get" class="input-group mb-3">
+
+			<div class="col-auto">
+				<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/avio/form}"
+					class="btn btn-success" id="button-addon1"><i
+					class="far fa-save"></i> Crear</a>
+			</div>
+
+			<div class="col-auto">
+				<select name="keyword" class="form-select form-control">
+					<option th:value="'Cierre'">Cierre</option>
+					<option th:value="'Boton'">Boton</option>
+					<option th:value="'Remache'">Remache</option>
+					<option th:value="'Adorno'">Adorno</option>
+				</select>
+			</div>
+			
+			<input type="hidden" value="0" name="page">
+			
+			<div class="col-auto">
+				<button class="btn btn-primary" type="submit">
+					<i class="fas fa-user-edit"></i>Buscar
+				</button>
+			</div>
+		</form>
+	</div>
+
+
+	<div class="container">
+
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th scope="col">NOMBRE</th>
+					<th scope="col">TIPO</th>
+					<th scope="col">COLOR</th>
+					<th scope="col">CANTIDAD</th>
+					<th scope="col">COSTO</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
+				</tr>
+			</thead>
+
+			<tbody class="table-light">
+
+				<tr th:each="avio: ${avios}">
+					<td th:text="${avio.nombre}"></td>
+					<td th:text="${avio.tipo}"></td>
+					<td th:text="${avio.color}"></td>
+					<td th:text="${avio.cantidad}"></td>
+					<td th:text="${avio.costo}"></td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-primary btn-xs"
+						th:href="@{/avio/form/} + ${avio.id}" th:text="'editar'"></a></td>
+
+					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="btn btn-danger btn-xs"
+						th:href="@{/avios/eliminar/} + ${avio.id}" th:text="'eliminar'"
+						onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<nav th:replace="paginator-nav :: paginator"></nav>
+	</div>
+
+	<!--===== MAIN JS =====-->
+
+	<script src="/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js "
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj "
+		crossorigin="anonymous "></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js "
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN "
+		crossorigin="anonymous "></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js "
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV "
+		crossorigin="anonymous "></script>
+</body>
+
+</html>
